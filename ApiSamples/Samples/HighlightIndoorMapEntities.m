@@ -29,6 +29,7 @@
     [[self addButton: @"Go to floor" withIndex: 0 andSelector: @selector(goToFloor)] setEnabled:YES];
     [buttons addObject: [self addButton: @"Highlight entities" withIndex: 1 andSelector: @selector(highlightEntities)]];
     [buttons addObject: [self addButton: @"Clear highlights" withIndex: 2 andSelector: @selector(clearEntityHighlights)]];
+    //Add button to exit
 
     _buttons = buttons;
 
@@ -89,6 +90,7 @@
 
 - (void) highlightEntities
 {
+    //Update according to api changes
     NSString* indoorId = _mapView.activeIndoorMap.indoorId;
     [_mapView setEntityHighlights:indoorId
                      highlightIds:@[@"0007", @"Small Meeting Room"]
@@ -107,7 +109,7 @@
 {
     [_mapView clearAllEntityHighlights];
 }
-
+//Dont disable buttons when outside. keep them active
 - (void) didEnterIndoorMap
 {
     for (UIButton *button in _buttons)

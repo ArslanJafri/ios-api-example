@@ -26,7 +26,7 @@
     [self.view addSubview:_mapView];
 
     [self addButton: @"Go to floor" withIndex: 0 andSelector: @selector(goToFloor)];
-
+    //Add button to exit
     _colors = [[NSArray alloc] initWithObjects:[[UIColor redColor] colorWithAlphaComponent:0.5],
                                                [[UIColor blueColor] colorWithAlphaComponent:0.5],
                                                [[UIColor greenColor] colorWithAlphaComponent:0.5],
@@ -67,12 +67,13 @@
 
 - (void)mapView:(WRLDMapView *)mapView didPickIndoorEntities:(NSArray<NSString *> *)indoorEntityIds
 {
-    if (_mapView.activeIndoorMap)
+    if (_mapView.activeIndoorMap != nil)
     {
+        //*TODO move to a seperate method
         NSNumber *colorIndex = [_entityIdsToColorIndex objectForKey:indoorEntityIds[0]];
         NSUInteger index = colorIndex == nil ? 0 : (colorIndex.unsignedIntegerValue + 1) % [_colors count];
         [_entityIdsToColorIndex setValue:[NSNumber numberWithUnsignedInteger:index] forKey:indoorEntityIds[0]];
-
+        //*
         [mapView setEntityHighlights:_mapView.activeIndoorMap.indoorId
                         highlightIds:indoorEntityIds
                                color:[_colors objectAtIndex:index]];
